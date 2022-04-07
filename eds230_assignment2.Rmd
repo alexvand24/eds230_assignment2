@@ -53,6 +53,7 @@ almond_yield_anomaly = function(temp,
 
 
 
+
 ```{r example}
 almond_yield_anomaly(temp = 25, precip = 10)
 ```
@@ -62,10 +63,60 @@ almond_yield_anomaly(temp = 25, precip = 10)
 
 ```{r}
 # read in the data from .txt file
-clim_txt_data_raw <- read_delim(file = "clim.txt")
+clim_txt_data_raw <- read.csv(file = "clim.txt", header = T, sep = "")
+# I was having trouble with read_delim, not sure why? (Elmera)
 
-# 
+# clean data 
 clim_txt_data <- clim_txt_data_raw %>% janitor::clean_names()
+```
+
+
+```{r}
+## almond yield function, including Tmin February and Total January Precip
+almond_yield_anomaly = function(temp,
+                                precip,
+                                temp_coeff1 = -0.015,
+                                temp_coeff2 = -0.0046,
+                                precip_coeff1 = -0.07,
+                                precip_coeff2 = 0.0043,
+                                constant = 0.28) {
+
+temp = clim_txt_data %>% 
+  group_by(month, year) %>% 
+  summarize(tmin_c=mean(tmin_c))
+
+TminFeb = (temp %>% 
+             filter(month==2))$tmin_c 
+
+pcp = clim_txt_data %>% 
+  group_by(month, year) %>% 
+  summarize(precip =
+              sum(precip))
+
+PJan = (pcp %>% 
+          filter(month==1))$precip
+
+
+almond_yield_anomaly =
+  (temp_coeff1*TminFeb) + (temp_coeff2*TminFeb**2) +
+  (precip_coeff1*PJan) + (precip_coeff2*PJan**2) + constant
+
+return(almond_yield_anomaly)
+}
+
+# annual yield 
+annual_almond_yield<- cbind(unique(clim_txt_data$year), almond_yield_anomaly(clim_txt_data)) %>%  
+  as.data.frame() %>% 
+  rename(year = V1,
+         yield = V2)
+
+# plotting results
+ggplot(annual_almond_yield, 
+       aes(year, yield)) + 
+  geom_line()+
+  geom_point() +
+  theme_bw() +
+  labs(x = "Year", y = "Almond Yield (tons/acre)")
 ```
 
 

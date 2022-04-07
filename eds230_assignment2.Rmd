@@ -1,0 +1,56 @@
+---
+title: "Assignment 2"
+author: "Elmera Azadpour, Mia Forsline, Alex Vand"
+date: "4/7/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+```
+
+
+
+## Key
+- `variable_name` = description [units]
+
+
+## Inputs
+- `temp` = temperature [degrees C]
+- `precip` = precipitation [mm]
+
+
+## Parameters
+- `temp_coeff1`
+- `temp_coeff2`
+- `precip_coeff1`
+- `precip_coeff2`
+
+
+## Outputs
+- `almond_yield_anomaly` = almond yield anomaly [ton/acre]
+
+```{r}
+almond_yield_anomaly = function(temp,
+                        precip,
+                        temp_coeff1 = -0.015,
+                        temp_coeff2 = -0.0046,
+                        precip_coeff1 = -0.07,
+                        precip_coeff2 = 0.0043,
+                        constant = 0.28){
+  
+  almond_yield_anomaly <- (temp_coeff1 * temp) + (temp_coeff1 * temp^2) + (precip_coeff1 * precip) + (precip_coeff2 * precip^2) + constant
+  
+  return(almond_yield_anomaly)
+                        }
+```
+
+
+
+```{r example}
+almond_yield_anomaly(temp = 25, precip = 10)
+```
+
+

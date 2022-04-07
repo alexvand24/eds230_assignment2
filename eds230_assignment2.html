@@ -180,8 +180,8 @@ pre code {
 <div id="inputs" class="section level2">
 <h2>Inputs</h2>
 <ul>
-<li><code>temp</code> = temperature [degrees C]</li>
-<li><code>precip</code> = precipitation [mm]</li>
+<li><code>temp</code> = minimum temperature in February [degrees C]</li>
+<li><code>precip</code> = average? precipitation in January [mm]</li>
 </ul>
 </div>
 <div id="parameters" class="section level2">
@@ -198,13 +198,16 @@ pre code {
 <ul>
 <li><code>almond_yield_anomaly</code> = almond yield anomaly [ton/acre]</li>
 </ul>
+</div>
+<div id="mathematical-model" class="section level2">
+<h2>Mathematical model</h2>
 <pre class="r"><code>almond_yield_anomaly = function(temp,
-                        precip,
-                        temp_coeff1 = -0.015,
-                        temp_coeff2 = -0.0046,
-                        precip_coeff1 = -0.07,
-                        precip_coeff2 = 0.0043,
-                        constant = 0.28){
+                                precip,
+                                temp_coeff1 = -0.015,
+                                temp_coeff2 = -0.0046,
+                                precip_coeff1 = -0.07,
+                                precip_coeff2 = 0.0043,
+                                constant = 0.28){
   
   almond_yield_anomaly &lt;- (temp_coeff1 * temp) + (temp_coeff1 * temp^2) + (precip_coeff1 * precip) + (precip_coeff2 * precip^2) + constant
   
@@ -212,6 +215,56 @@ pre code {
                         }</code></pre>
 <pre class="r"><code>almond_yield_anomaly(temp = 25, precip = 10)</code></pre>
 <pre><code>## [1] -9.74</code></pre>
+</div>
+<div id="data" class="section level2">
+<h2>Data</h2>
+<pre class="r"><code># read in the data from .txt file
+clim_txt_data_raw &lt;- read_delim(file = &quot;clim.txt&quot;)</code></pre>
+<pre><code>## Rows: 7920 Columns: 9</code></pre>
+<pre><code>## -- Column specification --------------------------------------------------------
+## Delimiter: &quot; &quot;
+## chr  (1): wyd
+## dbl  (7): D, month, year, wy, tmax_c, tmin_c, precip
+## date (1): day</code></pre>
+<pre><code>## 
+## i Use `spec()` to retrieve the full column specification for this data.
+## i Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code># 
+clim_txt_data &lt;- clim_txt_data_raw %&gt;% janitor::clean_names()</code></pre>
+</div>
+<div id="generalize-temp-and-precip-inputs" class="section level2">
+<h2>Generalize temp and precip inputs</h2>
+<pre class="r"><code>temp = function(minimum, month_number){
+  
+  # minimum = TRUE for minimum value // FALSE for maximum value
+  # month = number (out of 12) of month of interest
+  
+ if (minimum == TRUE){
+   
+   temp &lt;- min(clim_txt_data$tmin_c[clim_txt_data$month == month_number])
+   
+} else if (minimum == FALSE){
+  
+  temp &lt;- max(clim_txt_data$tmax_c[clim_txt_data$month == month_number]) 
+  
+} else {
+  
+  print(&quot;Error: must select TRUE (1) or FALSE (0) for minimum input&quot;)
+  
+}
+  
+  return(temp)
+                        }</code></pre>
+<pre class="r"><code>precip = function(month){
+  
+  # month = number (out of 12) of month of interest
+  
+   
+   precip &lt;- mean(clim_txt_data$precip[clim_txt_data$month == month_number])
+   
+  
+  return(precip)
+                        }</code></pre>
 </div>
 
 

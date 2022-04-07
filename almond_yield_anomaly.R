@@ -1,16 +1,17 @@
 #' Almond yield anomaly
 #'
 #' This function computes almond yield anomaly 
-#’ given temperature and precipitation
-#' @param temp temperature (degrees C)
-#' @param precip precipitation (mm)
+#’ given temperature and precipitation data.
+#' @param temp minimum temperature in February (degrees C)
+#' @param precip anuary precipitation (mm)
 #' @param temp_coeff1 coefficient (ton/acre/degree C) default is -0.015
 #' @param temp_coeff2 coefficient (ton/acre/degree C) default is -0.0046
 #' @param precip_coeff1 coefficient (ton/acre/mm)
 #' @param precip_coeff2 coefficient (ton/acre/mm)
-#' @author Elmera Azadpur, Mia Forsline, Alex Vand
+#' @param constant constant (ton/acre) default is 0.28
+#' @author Elmera Azadpour, Mia Forsline, Alex Vand
 #' @examples almond_yield(temp = 25, precip = 10)
-#' @return almond_yield_anomaly (W/s)
+#' @return almond_yield_anomaly (ton/acre)
 
 
 

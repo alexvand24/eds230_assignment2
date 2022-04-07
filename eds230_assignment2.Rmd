@@ -18,8 +18,8 @@ library(tidyverse)
 
 
 ## Inputs
-- `temp` = temperature [degrees C]
-- `precip` = precipitation [mm]
+- `temp` = minimum temperature in February [degrees C]
+- `precip` = average? precipitation in January [mm]
 
 
 ## Parameters
@@ -32,14 +32,18 @@ library(tidyverse)
 ## Outputs
 - `almond_yield_anomaly` = almond yield anomaly [ton/acre]
 
-```{r}
+
+
+## Mathematical model
+
+```{r almond yield anomaly}
 almond_yield_anomaly = function(temp,
-                        precip,
-                        temp_coeff1 = -0.015,
-                        temp_coeff2 = -0.0046,
-                        precip_coeff1 = -0.07,
-                        precip_coeff2 = 0.0043,
-                        constant = 0.28){
+                                precip,
+                                temp_coeff1 = -0.015,
+                                temp_coeff2 = -0.0046,
+                                precip_coeff1 = -0.07,
+                                precip_coeff2 = 0.0043,
+                                constant = 0.28){
   
   almond_yield_anomaly <- (temp_coeff1 * temp) + (temp_coeff1 * temp^2) + (precip_coeff1 * precip) + (precip_coeff2 * precip^2) + constant
   
@@ -52,5 +56,63 @@ almond_yield_anomaly = function(temp,
 ```{r example}
 almond_yield_anomaly(temp = 25, precip = 10)
 ```
+
+
+## Data
+
+```{r}
+# read in the data from .txt file
+clim_txt_data_raw <- read_delim(file = "clim.txt")
+
+# 
+clim_txt_data <- clim_txt_data_raw %>% janitor::clean_names()
+```
+
+
+
+## Generalize temp and precip inputs
+
+
+```{r}
+temp = function(minimum, month_number){
+  
+  # minimum = TRUE for minimum value // FALSE for maximum value
+  # month = number (out of 12) of month of interest
+  
+ if (minimum == TRUE){
+   
+   temp <- min(clim_txt_data$tmin_c[clim_txt_data$month == month_number])
+   
+} else if (minimum == FALSE){
+  
+  temp <- max(clim_txt_data$tmax_c[clim_txt_data$month == month_number]) 
+  
+} else {
+  
+  print("Error: must select TRUE (1) or FALSE (0) for minimum input")
+  
+}
+  
+  return(temp)
+                        }
+```
+
+
+
+```{r}
+precip = function(month){
+  
+  # month = number (out of 12) of month of interest
+  
+   
+   precip <- mean(clim_txt_data$precip[clim_txt_data$month == month_number])
+   
+  
+  return(precip)
+                        }
+```
+
+
+
 
 

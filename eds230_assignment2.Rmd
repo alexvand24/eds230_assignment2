@@ -1,8 +1,10 @@
 ---
 title: "EDS 230 Assignment 2"
 author: "Elmera Azadpour, Mia Forsline, Alex Vand"
-date: "2022-04-12"
-output: html_document
+date: '2022-04-12'
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 # Introduction

@@ -20,8 +20,9 @@ if (!require(librarian)){
 }
 
 librarian::shelf(
-  tidyverse,
-  here)
+  here,
+  lubridate,
+  tidyverse)
 
 #read in the almond_yield_anomaly R script in order to use the almond_yield_anomaly() function in this RMD 
 source(here("almond_yield_anomaly.R"))
@@ -50,12 +51,13 @@ source(here("almond_yield_anomaly.R"))
 
 
 # Test the `almond_yield_anomaly()` function 
+
 ```{r example}
 almond_yield_anomaly(feb_temp_min = 25, 
                      jan_precip = 10)
 ```
 
-## Climate data 
+# Read in climate data 
 
 ```{r}
 # read in the data from .txt file
@@ -65,45 +67,64 @@ clim_raw <- read.csv(file = "clim.txt",
 
 # clean data 
 clim_data <- clim_raw %>% 
-             janitor::clean_names()
+             janitor::clean_names() %>% 
+             mutate(d = lubridate::as_date(d), #convert d column to Date format rather than a character 
+                    year = lubridate::year(d))
 ```
 
-
+# Use the `almond_yield_anomaly()` function using coefficients from the paper 
 ```{r}
+# set coefficient parameter values 
+temp_coeff1 <- -0.015
+temp_coeff2 <- -0.0046
+precip_coeff1 <- -0.07
+precip_coeff2 <- 0.0043
+constant <- 0.28
+
 ## almond yield function, including Tmin February and Total January Precip
-almond_yield_anomaly = function(temp,
-                                precip,
+almond_yield_anomaly = function(feb_temp_min,
+                                jan_precip,
                                 temp_coeff1 = -0.015,
                                 temp_coeff2 = -0.0046,
                                 precip_coeff1 = -0.07,
                                 precip_coeff2 = 0.0043,
                                 constant = 0.28) {
 
-temp = clim_txt_data %>% 
+#create a temperature data frame to summarize monthly temperature minimums by year
+temp <- clim_data %>% 
   group_by(month, year) %>% 
   summarize(tmin_c=mean(tmin_c))
 
-TminFeb = (temp %>% 
+#extract the average minimum temperature for February 
+tmin_feb = (temp %>% 
              filter(month==2))$tmin_c 
 
-pcp = clim_txt_data %>% 
+#create a precipitation data frame to summarize monthly precipitation averages by year 
+precip <- clim_data %>% 
   group_by(month, year) %>% 
   summarize(precip =
               sum(precip))
 
-PJan = (pcp %>% 
+#extract the average precipitation values for January 
+precip_jan = (precip %>% 
           filter(month==1))$precip
 
-
+#calculate almond yield anomaly 
 almond_yield_anomaly =
-  (temp_coeff1*TminFeb) + (temp_coeff2*TminFeb**2) +
-  (precip_coeff1*PJan) + (precip_coeff2*PJan**2) + constant
+  (temp_coeff1 * tmin_feb) + 
+  (temp_coeff2 * tmin_feb**2) +
+  (precip_coeff1 * precip_jan) + 
+  (precip_coeff2 * precip_jan**2) + 
+  constant
 
 return(almond_yield_anomaly)
 }
+```
 
-# annual yield 
-annual_almond_yield<- cbind(unique(clim_txt_data$year), almond_yield_anomaly(clim_txt_data)) %>%  
+
+```{r}
+# calculate annual almond yield for each year
+annual_almond_yield <- cbind(unique(clim_data$year), almond_yield_anomaly(clim_data)) %>%  
   as.data.frame() %>% 
   rename(year = V1,
          yield = V2)

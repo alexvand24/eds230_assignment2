@@ -27,8 +27,7 @@ librarian::shelf(
   lubridate,
   tidyverse)
 
-#read in the almond_yield_anomaly and almond_yield_anomaly_annual R scripts in order to use the functions in this RMD 
-source(here("functions", "almond_yield_anomaly.R"))
+#read in the almond_yield_anomaly_annual R script in order to use the function in this RMD 
 source(here("functions", "almond_yield_anomaly_annual.R"))
 ```
 

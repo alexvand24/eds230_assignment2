@@ -1,35 +1,33 @@
-#' Temperature function 
+#' Temperature function
 #'
-#' This function computes almond yield anomaly 
-#’ given singular values of temperature and precipitation 
-#’ This function is based on a model built by Lobell et al. (2006). 
+#' This function computes extracts average minimum temperature from any month in the climate data given singular values of temperature and precipitation 
+#’ This function is to prepare climate data for a model built by Lobell et al. (2006). 
 #’
-#' @param feb_temp_min minimum temperature in February (degrees C)
-#' @param jan_precip January precipitation (mm)
-#' @param temp_coeff1 coefficient (ton/acre/degree C), default is -0.015
-#' @param temp_coeff2 coefficient (ton/acre/degree C), default is -0.0046
-#' @param precip_coeff1 coefficient (ton/acre/mm)
-#' @param precip_coeff2 coefficient (ton/acre/mm)
-#' @param constant constant (ton/acre), default is 0.28
+#' @minimum select minimum or maximum average monthly temperature (minimum = TRUE or minimum = FALSE)
+#' @param month_number integer from 1 - 12 to indicate the month of interest where January = 1 and December = 12
 #' @author Elmera Azadpour, Mia Forsline, Alex Vand
-#' @examples almond_yield(temp = 25, precip = 10)
-#' @return almond_yield_anomaly (ton/acre)
+#' @examples temp(month = 2)
+#' @return average minimum temperature per month (ºC)
 
 
-
-almond_yield_anomaly = function(feb_temp_min,
-                                jan_precip,
-                                temp_coeff1 = -0.015,
-                                temp_coeff2 = -0.0046,
-                                precip_coeff1 = -0.07,
-                                precip_coeff2 = 0.0043,
-                                constant = 0.28){
+temp = function(minimum, month_number){
   
-  almond_yield_anomaly <- (temp_coeff1 * feb_temp_min) +
-    (temp_coeff1 * feb_temp_min^2) +
-    (precip_coeff1 * jan_precip) +
-    (precip_coeff2 * jan_precip^2) +
-    constant
+  # minimum = TRUE for minimum value // FALSE for maximum value
+  # month = number (out of 12) of month of interest
   
-  return(almond_yield_anomaly)
+  if (minimum == TRUE){
+    
+    temp <- min(clim_data$tmin_c[clim_data$month == month_number])
+    
+  } else if (minimum == FALSE){
+    
+    temp <- max(clim_data$tmax_c[clim_data$month == month_number]) 
+    
+  } else {
+    
+    print("Error: must select TRUE (1) or FALSE (0) for minimum input")
+    
+  }
+  
+  return(temp)
 }

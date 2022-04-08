@@ -3,7 +3,7 @@
 #' This function computes extracts average precipitation from any month in the climate data given singular values of temperature and precipitation 
 #’ This function is to prepare climate data for a model built by Lobell et al. (2006). 
 #’
-#' @param month integer from 1 - 12 to indicate the month of interest where January = 1 and December = 12
+#' @param month_number integer from 1 - 12 to indicate the month of interest where January = 1 and December = 12
 #' @author Elmera Azadpour, Mia Forsline, Alex Vand
 #' @examples precip(month = 2)
 #' @return average monthly precipitation (mm)

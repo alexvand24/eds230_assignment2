@@ -56,13 +56,6 @@ Note that all parameter values are based on the original paper.
 
 -   `almond_yield_anomaly` = almond yield anomaly [ton/acre]
 
-# Test the simple `almond_yield_anomaly()` function given one year's worth of temperature and precipitation data
-
-```{r example}
-almond_yield_anomaly(feb_temp_min = 25, 
-                     jan_precip = 10)
-```
-
 # Read in climate data
 
 ```{r}
@@ -132,35 +125,3 @@ avg_yield <- mean(annual_almond_yield$yield)
 We built a simpler replica of the almond yield model built by Lobell et al. (2006) using two different functions. From 1988 to 2010, the average almond yield was `r avg_yield` tons/acre per year. During this time period, average almond yield peaked at `r max_yield` in 1994 while some years reported average almond yields of zero. 
 
 Moving forward, it would be interesting to further investigate outlier years like 1994 to discern if that high of an average almond yield is feasible or if the model can be improved. 
-
-# Generalize temp and precip inputs
-
-## Function to extract minimum temperature from any month in the climate data 
-```{r}
-temp = function(minimum, month_number){
-  
-  # minimum = TRUE for minimum value // FALSE for maximum value
-  # month = number (out of 12) of month of interest
-  
- if (minimum == TRUE){
-   
-   temp <- min(clim_txt_data$tmin_c[clim_txt_data$month == month_number])
-   
-} else if (minimum == FALSE){
-  
-  temp <- max(clim_txt_data$tmax_c[clim_txt_data$month == month_number]) 
-  
-} else {
-  
-  print("Error: must select TRUE (1) or FALSE (0) for minimum input")
-  
-}
-  
-  return(temp)
-                        }
-```
-
-## 
-```{r}
-
-```

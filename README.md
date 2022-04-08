@@ -3,7 +3,7 @@
 ## Student authors: Elmera Azadpour, Mia Forsline, Alex Vand
 ## Due 2022-04-12 
 
-Original instructions can be found [here](https://naomitague.github.io/ESM232_course/assignments/almond_yield_function.html). 
+Original assignment instructions can be found [here](https://naomitague.github.io/ESM232_course/assignments/almond_yield_function.html). 
 
 ## Motivation and project goal
 This assignment draws from the article, [Impacts of future climate change on California perennial crop yields: Model projections with climate and crop uncertainties by Lobell et al. (2006)](https://www.sciencedirect.com/science/article/pii/S016819230600308X). Lobell et al. (2006) build statistical models to predict crop yields of 6 major perennial crops in California:

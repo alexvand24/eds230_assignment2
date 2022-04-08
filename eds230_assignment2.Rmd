@@ -13,7 +13,7 @@ The goal of this assignment is to build a simple model to predict annual almond 
 
 # Set up: Load necessary libraries and scripts
 
-```{r setup, include=FALSE}
+```{r setup, include=TRUE}
 knitr::opts_chunk$set(echo = TRUE)
 
 #install packages if necessary, then load libraries

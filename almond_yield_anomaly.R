@@ -1,7 +1,8 @@
 #' Almond yield anomaly
 #'
 #' This function computes almond yield anomaly 
-#’ given temperature and precipitation data.
+#’ given temperature and precipitation data. 
+#’ This function is based on a model built by Lobell et al. (2006). 
 #' @param temp minimum temperature in February (degrees C)
 #' @param precip anuary precipitation (mm)
 #' @param temp_coeff1 coefficient (ton/acre/degree C) default is -0.015

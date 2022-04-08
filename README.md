@@ -1,33 +1,34 @@
-# eds230_assignment2
+# EDS 230: Modeling Environmental Systems
+## Assignment 2: Almond Yield Function 
+## Student authors: Elmera Azadpour, Mia Forsline, Alex Vand
+## Due 2022-04-12 
 
-Almond Yield Function Assignment 2
+Original assignment instructions can be found [here](https://naomitague.github.io/ESM232_course/assignments/almond_yield_function.html). 
 
-For assignment two we will be building the almond model (from Lobell et al. 2006) in R. The conceptual model, from the last assignment, should have laid the foundation for what needs to be done, now your job is to figure out how to implement it in R. As a side note: there are always multiple ways to code something in R; of course focus on getting the correct answer first, but also remember that we want to strive for our code being as simple and streamline as possible. Style counts. Make sure you choose meaningful variable names and add comments. Include comments at the top of the function to tell the user what the inputs/outputs are and their units and format.
+## Motivation and project goal
+This assignment draws from the article, [Impacts of future climate change on California perennial crop yields: Model projections with climate and crop uncertainties by Lobell et al. (2006)](https://www.sciencedirect.com/science/article/pii/S016819230600308X). Lobell et al. (2006) build statistical models to predict crop yields of 6 major perennial crops in California:
+1. wine grapes
+2. almonds
+3. table grapes
+4. oranges
+5. walnuts
+6. and avocados. 
 
-Here are some ideas to think though. First, the climate data is going to need to be subsetted. How the almond function is written will dictate how the climate data is going to be stored, after it is subsetted. Second, we want to build a clean function that is versatile. Here are two model outlines to follow
+The **project goal** is to recreate a simple almond yield prediction model and predict average almond yield (tons/acre) from 1988 to 2010 based on temperature and precipitation data. 
 
-● Almond_model <- function(clim_var1, clim_var2, parameters){……}
+## Intended purpose and important concepts
+As this project is intended for educational purposes, the student authors practiced the following:
+- building functions in R 
+- sourcing R scripts into RMarkdown files 
 
-● Almond_model <- function(clim, parameters){……}
+## Future research
 
-The first example is where the climate variables are separately input into the function, and the second is where a data frame is the input in the function and you extract the useful data from it. The first demands that the data is subset beforehand, the second subsets the data as part of the function, but demands the dataframe be structured in a specific way. There are advantages to both – the first is simpler model to ‘code’ ; but requires more ‘beforehand’ work by the user. You can pick which option you prefer (or try both)
+## Installation
+The following **packages** were utilized during this analysis:
+- `here`
+- `lubridate`
+- `tidyverse`
 
-#Steps:
+## Data
 
-code your function in R; save it as a separate file called “the name of your function”.R; Make sure you include documentation Store your R function in a git repository - you will need it again for future assignment
-
-in an Rmarkdown document, write code to read in the “clim.txt”, (which you can find on [esm232_examples github site]{https://github.com/naomitague/ESM232_Examples.git}
-
-do any subsetting required for input to your function, run the function and save results
-
-Summarize the results as follows
-The end product we are looking for: calculate the almond yield anomaly for each year, and summarize the data. We will leave how to summarize the data up to you. Think about what metrics would be best to explain the trends in outputs. Tables, graphs, and summary metrics are all acceptable – these you will generate outside the function in your Rmarkdown. Make sure to include axis labels, units and captions.
-
-Finally, write one paragraph summarizing your findings. Submit pdf of rmarkdown.and the function.R file to gauchospace – Submit as a group
-Three answers to check your model against:
-
-2000: 9.59
-
-2001: 159.51
-
-2002: 0.24
+Model parameter values were taken from [Lobell et al. (2006)](https://www.sciencedirect.com/science/article/pii/S016819230600308X). Climate data were source from [here](https://github.com/naomitague/ESM232_Examples/tree/main/Data). 

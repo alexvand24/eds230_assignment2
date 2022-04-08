@@ -9,11 +9,22 @@ output: html_document
 
 The goal of this assignment is to build a simple model to predict almond yield based on the paper by [Lobell et al. (2006)](https://www.sciencedirect.com/science/article/pii/S016819230600308X). 
 
-# Load necessary libraries 
+# Set up: Load necessary libraries and scripts 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
-library(tidyverse)
+#install packages if necessary, then load libraries
+if (!require(librarian)){
+  install.packages("librarian")
+  library(librarian)
+}
+
+librarian::shelf(
+  tidyverse,
+  here)
+
+#read in the almond_yield_anomaly R script in order to use the almond_yield_anomaly() function in this RMD 
+source(here("almond_yield_anomaly.R"))
 ```
 
 # Function description 
@@ -23,8 +34,8 @@ library(tidyverse)
 
 
 ## Inputs
-- `temp` = minimum temperature in February [degrees C]
-- `precip` = average? precipitation in January [mm]
+- `temp` = average minimum temperature in February [degrees C]
+- `precip` = average precipitation in January [mm]
 
 
 ## Parameters
@@ -38,25 +49,22 @@ library(tidyverse)
 - `almond_yield_anomaly` = almond yield anomaly [ton/acre]
 
 
-
-## Mathematical model
+# Running the Mathematical model
 
 ```{r almond yield anomaly}
-almond_yield_anomaly = function(temp,
-                                precip,
-                                temp_coeff1 = -0.015,
-                                temp_coeff2 = -0.0046,
-                                precip_coeff1 = -0.07,
-                                precip_coeff2 = 0.0043,
-                                constant = 0.28){
-  
-  almond_yield_anomaly <- (temp_coeff1 * temp) + (temp_coeff1 * temp^2) + (precip_coeff1 * precip) + (precip_coeff2 * precip^2) + constant
-  
-  return(almond_yield_anomaly)
-                        }
+# almond_yield_anomaly = function(temp,
+#                                 precip,
+#                                 temp_coeff1 = -0.015,
+#                                 temp_coeff2 = -0.0046,
+#                                 precip_coeff1 = -0.07,
+#                                 precip_coeff2 = 0.0043,
+#                                 constant = 0.28){
+#   
+#   almond_yield_anomaly <- (temp_coeff1 * temp) + (temp_coeff1 * temp^2) + (precip_coeff1 * precip) + (precip_coeff2 * precip^2) + constant
+#   
+#   return(almond_yield_anomaly)
+#                         }
 ```
-
-
 
 
 ```{r example}

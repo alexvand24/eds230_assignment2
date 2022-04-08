@@ -101,7 +101,7 @@ yield_2001 <- subset(annual_almond_yield, year == 2001)[[2]]
 yield_2001
 ```
 
-# Plot the results 
+# Plot the annual trend in almond yield over time  
 ```{r}
 ggplot(annual_almond_yield, 
        aes(year, yield)) + 
@@ -111,9 +111,11 @@ ggplot(annual_almond_yield,
   labs(x = "Year", y = "Almond Yield (tons/acre)") + 
   theme_classic()
 ```
+# Results and conclusions 
 
-## Generalize temp and precip inputs
+We built a simpler replica of the almond yield model built by Lobell et al. (2006) using two different functions. 
 
+# Generalize temp and precip inputs
 
 ```{r}
 temp = function(minimum, month_number){

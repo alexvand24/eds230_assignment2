@@ -1,17 +1,22 @@
 ---
-title: "Assignment 2"
+title: "EDS 230 Assignment 2"
 author: "Elmera Azadpour, Mia Forsline, Alex Vand"
-date: "4/7/2022"
+date: "2022-04-12"
 output: html_document
 ---
 
+# Introduction 
+
+The goal of this assignment is to build a simple model to predict almond yield based on the paper by [Lobell et al. (2006)](https://www.sciencedirect.com/science/article/pii/S016819230600308X). 
+
+# Load necessary libraries 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
 library(tidyverse)
 ```
 
-
+# Function description 
 
 ## Key
 - `variable_name` = description [units]

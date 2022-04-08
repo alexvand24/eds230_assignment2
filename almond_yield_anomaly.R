@@ -25,10 +25,10 @@ almond_yield_anomaly = function(feb_temp_min,
                                 precip_coeff2 = 0.0043,
                                 constant = 0.28){
   
-  almond_yield_anomaly <- (temp_coeff1 * temp) +
-                          (temp_coeff1 * temp^2) +
-                          (precip_coeff1 * precip) +
-                          (precip_coeff2 * precip^2) +
+  almond_yield_anomaly <- (temp_coeff1 * feb_temp_min) +
+                          (temp_coeff1 * feb_temp_min^2) +
+                          (precip_coeff1 * jan_precip) +
+                          (precip_coeff2 * jan_precip^2) +
                           constant
   
   return(almond_yield_anomaly)

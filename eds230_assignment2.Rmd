@@ -49,38 +49,23 @@ source(here("almond_yield_anomaly.R"))
 - `almond_yield_anomaly` = almond yield anomaly [ton/acre]
 
 
-# Running the Mathematical model
-
-```{r almond yield anomaly}
-# almond_yield_anomaly = function(temp,
-#                                 precip,
-#                                 temp_coeff1 = -0.015,
-#                                 temp_coeff2 = -0.0046,
-#                                 precip_coeff1 = -0.07,
-#                                 precip_coeff2 = 0.0043,
-#                                 constant = 0.28){
-#   
-#   almond_yield_anomaly <- (temp_coeff1 * temp) + (temp_coeff1 * temp^2) + (precip_coeff1 * precip) + (precip_coeff2 * precip^2) + constant
-#   
-#   return(almond_yield_anomaly)
-#                         }
-```
-
-
+# Test the `almond_yield_anomaly()` function 
 ```{r example}
-almond_yield_anomaly(temp = 25, precip = 10)
+almond_yield_anomaly(feb_temp_min = 25, 
+                     jan_precip = 10)
 ```
 
-
-## Data
+## Climate data 
 
 ```{r}
 # read in the data from .txt file
-clim_txt_data_raw <- read.csv(file = "clim.txt", header = T, sep = "")
-# I was having trouble with read_delim, not sure why? (Elmera)
+clim_raw <- read.csv(file = "clim.txt", 
+                     header = T, 
+                     sep = "")
 
 # clean data 
-clim_txt_data <- clim_txt_data_raw %>% janitor::clean_names()
+clim_data <- clim_raw %>% 
+             janitor::clean_names()
 ```
 
 

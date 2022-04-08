@@ -51,7 +51,7 @@ source(here("functions", "almond_yield_anomaly_annual.R"))
 - `almond_yield_anomaly` = almond yield anomaly [ton/acre]
 
 
-# Test the simple `almond_yield_anomaly()` function 
+# Test the simple `almond_yield_anomaly()` function given one year's worth of temperature and precipitation data 
 
 ```{r example}
 almond_yield_anomaly(feb_temp_min = 25, 
@@ -73,7 +73,7 @@ clim_data <- clim_raw %>%
                     year = lubridate::year(d))
 ```
 
-# Use the `almond_yield_anomaly()` function using coefficients from the paper 
+# Use the `almond_yield_anomaly_annual()` function using coefficients from the paper 
 ```{r}
 # set coefficient parameter values 
 temp_coeff1 <- -0.015
@@ -82,64 +82,35 @@ precip_coeff1 <- -0.07
 precip_coeff2 <- 0.0043
 constant <- 0.28
 
-## almond yield function, including Tmin February and Total January Precip
-almond_yield_anomaly = function(feb_temp_min,
-                                jan_precip,
-                                temp_coeff1 = -0.015,
-                                temp_coeff2 = -0.0046,
-                                precip_coeff1 = -0.07,
-                                precip_coeff2 = 0.0043,
-                                constant = 0.28) {
-
-#create a temperature data frame to summarize monthly temperature minimums by year
-temp <- clim_data %>% 
-  group_by(month, year) %>% 
-  summarize(tmin_c=mean(tmin_c))
-
-#extract the average minimum temperature for February 
-tmin_feb = (temp %>% 
-             filter(month==2))$tmin_c 
-
-#create a precipitation data frame to summarize monthly precipitation averages by year 
-precip <- clim_data %>% 
-  group_by(month, year) %>% 
-  summarize(precip =
-              sum(precip))
-
-#extract the average precipitation values for January 
-precip_jan = (precip %>% 
-          filter(month==1))$precip
-
-#calculate almond yield anomaly 
-almond_yield_anomaly =
-  (temp_coeff1 * tmin_feb) + 
-  (temp_coeff2 * tmin_feb**2) +
-  (precip_coeff1 * precip_jan) + 
-  (precip_coeff2 * precip_jan**2) + 
-  constant
-
-return(almond_yield_anomaly)
-}
-```
-
-
-```{r}
 # calculate annual almond yield for each year
-annual_almond_yield <- cbind(unique(clim_data$year), almond_yield_anomaly(clim_data)) %>%  
-  as.data.frame() %>% 
+annual_almond_yield <- cbind(unique(clim_data$year), almond_yield_anomaly_annual(clim_data)) %>%  #create a matrix/array of dates and annual almond yields
+  as.data.frame() %>% #transform into a data frame 
   rename(year = V1,
          yield = V2)
+```
 
-# plotting results
+# Check the model outputs 
+```{r}
+yield_1999 <- subset(annual_almond_yield, year == 1999)[[2]]
+yield_1999
+
+yield_2000 <- subset(annual_almond_yield, year == 2000)[[2]]
+yield_2000
+
+yield_2001 <- subset(annual_almond_yield, year == 2001)[[2]]
+yield_2001
+```
+
+# Plot the results 
+```{r}
 ggplot(annual_almond_yield, 
        aes(year, yield)) + 
   geom_line()+
   geom_point() +
   theme_bw() +
-  labs(x = "Year", y = "Almond Yield (tons/acre)")
+  labs(x = "Year", y = "Almond Yield (tons/acre)") + 
+  theme_classic()
 ```
-
-
 
 ## Generalize temp and precip inputs
 

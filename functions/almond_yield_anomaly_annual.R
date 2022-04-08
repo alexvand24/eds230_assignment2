@@ -1,7 +1,7 @@
 #' Almond yield anomaly
 #'
 #' This function computes almond yield anomaly 
-#’ given temperature and precipitation data. 
+#’ given a dataframe of temperature and precipitation data for multiple years. 
 #’ This function is based on a model built by Lobell et al. (2006). 
 #’
 #' @param feb_temp_min minimum temperature in February (degrees C)
@@ -15,7 +15,7 @@
 #' @examples almond_yield(temp = 25, precip = 10)
 #' @return almond_yield_anomaly (ton/acre)
 
-almond_yield_anomaly = function(feb_temp_min,
+almond_yield_anomaly_annual = function(feb_temp_min,
                                 jan_precip,
                                 temp_coeff1 = -0.015,
                                 temp_coeff2 = -0.0046,

@@ -115,8 +115,10 @@ ggplot(annual_almond_yield,
        aes(year, yield)) + 
   geom_line()+
   geom_point() +
-  labs(x = "Year", y = "Almond Yield (tons/acre)") + 
+  labs(x = "Year", y = "Almond Yield Anomaly (tons/acre)") + 
   theme_classic()
+
+#add caption 
 ```
 
 # Results and conclusions
@@ -127,12 +129,13 @@ min_yield <- min(annual_almond_yield$yield)
 avg_yield <- mean(annual_almond_yield$yield)
 ```
 
-We built a simpler replica of the almond yield model built by Lobell et al. (2006) using two different functions. From 1988 to 2010, the average almond yield was `r avg_yield` tons/acre per year. During this time period, average almond yield peaked at `r max_yield` in 1994 while some years reported average almonnd yields of zero. 
+We built a simpler replica of the almond yield model built by Lobell et al. (2006) using two different functions. From 1988 to 2010, the average almond yield was `r avg_yield` tons/acre per year. During this time period, average almond yield peaked at `r max_yield` in 1994 while some years reported average almond yields of zero. 
 
 Moving forward, it would be interesting to further investigate outlier years like 1994 to discern if that high of an average almond yield is feasible or if the model can be improved. 
 
 # Generalize temp and precip inputs
 
+## Function to extract minimum temperature from any month in the climate data 
 ```{r}
 temp = function(minimum, month_number){
   
@@ -157,15 +160,7 @@ temp = function(minimum, month_number){
                         }
 ```
 
+## 
 ```{r}
-precip = function(month){
-  
-  # month = number (out of 12) of month of interest
-  
-   
-   precip <- mean(clim_txt_data$precip[clim_txt_data$month == month_number])
-   
-  
-  return(precip)
-                        }
+
 ```

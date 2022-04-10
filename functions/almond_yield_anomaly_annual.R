@@ -32,7 +32,7 @@ almond_yield_anomaly_annual = function(feb_temp_min,
   tmin_feb = (temp %>% 
                 filter(month==2))$tmin_c 
   
-  #create a precipitation data frame to summarize monthly precipitation averages by year 
+  #create a precipitation data frame to summarize monthly precipitation total by year 
   precip <- clim_data %>% 
     group_by(month, year) %>% 
     summarize(precip =

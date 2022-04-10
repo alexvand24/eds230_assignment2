@@ -80,8 +80,8 @@ precip_coeff1 <- -0.07
 precip_coeff2 <- 0.0043
 constant <- 0.28
 
-# calculate annual almond yield for each year
-annual_almond_yield <- cbind(unique(clim_data$year), almond_yield_anomaly_annual(clim_data)) %>%  #create a matrix/array of dates and annual almond yields
+# calculate annual almond yield for each water year
+annual_almond_yield <- cbind(unique(clim_data$wy), almond_yield_anomaly_annual(clim_data)) %>%  #create a matrix/array of dates and annual almond yields
   as.data.frame() %>% #transform into a data frame 
   rename(year = V1,
          yield = V2)
@@ -98,6 +98,9 @@ yield_2000
 
 yield_2001 <- subset(annual_almond_yield, year == 2001)[[2]]
 yield_2001
+
+yield_2002 <- subset(annual_almond_yield, year == 2002)[[2]]
+yield_2002
 ```
 
 # Plot the annual trend in almond yield over time

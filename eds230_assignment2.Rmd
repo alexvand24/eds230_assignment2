@@ -9,12 +9,14 @@ output:
 
 # Introduction
 
-The goal of this assignment is to build a simple model to predict annual almond yield based on the paper by [Lobell et al. (2006)](https://www.sciencedirect.com/science/article/pii/S016819230600308X).
+The goal of this assignment is to build a simple model to predict annual almond yield based on the paper by [[Lobell et al. (2006)]{.ul}](https://www.sciencedirect.com/science/article/pii/S016819230600308X).
 
 # Set up: Load necessary libraries and scripts
 
 ```{r setup, include=TRUE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE,
+                      message = FALSE, 
+                      warning = FALSE)
 
 #install packages if necessary, then load libraries
 if (!require(librarian)){
@@ -39,7 +41,7 @@ source(here("functions", "almond_yield_anomaly_annual.R"))
 
 ## Inputs
 
--   `temp` = average minimum temperature in February [degrees C]
+-   `temp` = average minimum temperature in February [ºC]
 -   `precip` = average precipitation in January [mm]
 
 ## Parameters
@@ -110,7 +112,7 @@ yield_2002
 
 # Plot the annual trend in almond yield over time
 
-```{r, fig.cap= "Line graph of almond yield anomolies (tons/acres) in California from 1988 - 2010. During this time, the average almond yield anomaly was approximately 173.5 tons/acre per year. Average almond yield anomaly peaked at approximately 1920 tons/acre in 1994 while some years reported negative average almond yield anomalies. This model is based on Lobell et al. (2006)."}
+```{r, fig.cap= "Line graph of almond yield anomolies (tons/acres) in California from 1988 - 2010. During this time, the average almond yield anomaly was approximately 173.5 tons/acre per year. Average almond yield anomaly peaked at approximately 1920 tons/acre in 1995 while some years reported negative average almond yield anomalies. This model is based on Lobell et al. (2006)."}
 
 ggplot(annual_almond_yield, 
        aes(year, yield)) + 
@@ -123,11 +125,11 @@ ggplot(annual_almond_yield,
 # Results and conclusions
 
 ```{r}
-max_yield <- max(annual_almond_yield$yield)
-min_yield <- min(annual_almond_yield$yield)
-avg_yield <- mean(annual_almond_yield$yield)
+max_yield <- round(max(annual_almond_yield$yield), digits = 2)
+min_yield <- round(min(annual_almond_yield$yield), digits = 2)
+avg_yield <- round(mean(annual_almond_yield$yield), digits = 2)
 ```
 
-We built a simpler replica of the almond yield model built by Lobell et al. (2006). From 1988 to 2010, the average almond yield anomaly was `r avg_yield` tons/acre per year. During this time period, average almond yield anomaly peaked at `r max_yield` in 1994 while some years reported negative average almond yield anomalies. Over time, there is no apparent visual positive or negative trend in average almond yield anomaly. There are multiple and sporadic peaks starting after 1994.
+We built a simpler replica of the almond yield model built by Lobell et al. (2006). From 1988 to 2010, the average almond yield anomaly was `r avg_yield` tons/acre per year. During this time period, average almond yield anomaly peaked at `r max_yield` in 1995 while some years reported negative average almond yield anomalies. Over time, there is no apparent visual positive or negative trend in average almond yield anomaly. There are multiple and sporadic peaks starting after 1995.
 
-Moving forward, it would be interesting to further investigate outlier years like 1994 to discern if that high of an average almond yield is feasible or if the model can be improved.
+Moving forward, it would be interesting to further investigate outlier years like 1995 to discern if that high of an average almond yield is feasible or if the model can be improved.

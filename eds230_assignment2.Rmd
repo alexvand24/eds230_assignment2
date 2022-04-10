@@ -71,7 +71,9 @@ clim_data <- clim_raw %>%
 ```
 
 # Use the `almond_yield_anomaly_annual()` function using coefficients from the paper
-- Note that this function averages minimum February temperatures (ºC) and January precipitation (mm)
+
+-   Note that this function averages minimum February temperatures (ºC) and January precipitation (mm)
+
 ```{r}
 # set coefficient parameter values 
 temp_coeff1 <- -0.015
@@ -80,7 +82,7 @@ precip_coeff1 <- -0.07
 precip_coeff2 <- 0.0043
 constant <- 0.28
 
-# calculate annual almond yield for each water year
+# calculate annual almond yield for each water year (wy)
 annual_almond_yield <- cbind(unique(clim_data$wy), almond_yield_anomaly_annual(clim_data)) %>%  #create a matrix/array of dates and annual almond yields
   as.data.frame() %>% #transform into a data frame 
   rename(year = V1,
@@ -89,10 +91,13 @@ annual_almond_yield <- cbind(unique(clim_data$wy), almond_yield_anomaly_annual(c
 
 # Check the model outputs
 
-```{r}
-yield_1999 <- subset(annual_almond_yield, year == 1999)[[2]]
-yield_1999
+The model should output the following values:
 
+-   2000: 9.59
+-   2001: 159.51
+-   2002: 0.24
+
+```{r}
 yield_2000 <- subset(annual_almond_yield, year == 2000)[[2]]
 yield_2000
 
@@ -123,6 +128,6 @@ min_yield <- min(annual_almond_yield$yield)
 avg_yield <- mean(annual_almond_yield$yield)
 ```
 
-We built a simpler replica of the almond yield model built by Lobell et al. (2006). From 1988 to 2010, the average almond yield anomaly was `r avg_yield` tons/acre per year. During this time period, average almond yield anomaly peaked at `r max_yield` in 1994 while some years reported negative average almond yield anomalies. Over time, there is no apparent visual positive or negative trend in average almond yield anomaly. There are multiple and sporadic peaks starting after 1994. 
+We built a simpler replica of the almond yield model built by Lobell et al. (2006). From 1988 to 2010, the average almond yield anomaly was `r avg_yield` tons/acre per year. During this time period, average almond yield anomaly peaked at `r max_yield` in 1994 while some years reported negative average almond yield anomalies. Over time, there is no apparent visual positive or negative trend in average almond yield anomaly. There are multiple and sporadic peaks starting after 1994.
 
-Moving forward, it would be interesting to further investigate outlier years like 1994 to discern if that high of an average almond yield is feasible or if the model can be improved. 
+Moving forward, it would be interesting to further investigate outlier years like 1994 to discern if that high of an average almond yield is feasible or if the model can be improved.

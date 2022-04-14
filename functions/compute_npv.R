@@ -1,6 +1,6 @@
-#' compute_discount
+#' Compute net present value of almonds 
 #' 
-#' This function calculates the future price of almonds in USD given a current value/cost, an amount of time, and a steady discount rate. 
+#' This function calculates the net present value of almonds in USD given a current value/cost, an amount of time, and a steady discount rate. 
 #' 
 #' @param price/cost current price of almonds ($)
 #' @param time the future time period during which the price/cost is being calculate dfor (years)

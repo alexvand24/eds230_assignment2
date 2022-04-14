@@ -1,0 +1,14 @@
+---
+title: "EDS 230 Assignment 3: Almond Profit Model Sensitivity Analysis"
+author: "Elmera Azadpour, Mia Forsline, Alex Vand"
+date: '2022-04-19'
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introduction 

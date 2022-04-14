@@ -6,16 +6,51 @@ output:
   pdf_document: default
   html_document: default
 ---
-
+# Set up 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE,
+                      message = FALSE, 
+                      warning = FALSE)
+
+#install packages if necessary, then load libraries
+if (!require(librarian)){
+  install.packages("librarian")
+  library(librarian)
+}
+
+librarian::shelf(
+  ggpubr,
+  here,
+  tidyverse,
+  tidyverse)
 ```
 
 # Introduction 
 
 # 1. Develop a profit model for almond yield 
 
+```{r}
+#read in R script to compute almond profit 
+#more details about the profit model can be found in the .R file 
+source(here("functions", "compute_profit_from_almonds.R"))
+
+#read in other necessary R scripts 
+
+# 1. read in R script to compute almond yield anomaly 
+source(here("functions", "almond_yield_anomaly_annual.R"))
+
+# 2. read in R script to compute net present value of almonds 
+source(here("functions", "compute_npv.R"))
+```
+
 # 2. Do a simple informal sensitivity analysis of almond yield profit using at least 2 parameters 
+
+- Similar to the in-class example, we plan to conduct a sensitivity analysis assuming +/- 15% uncertainty in the current price of almonds (`price`) and discount rate (`discount`) 
+
+```{r}
+
+```
+
 
 # 3. Create a single graph of the results 
 

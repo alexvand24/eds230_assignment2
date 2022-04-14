@@ -5,7 +5,7 @@
 #' @param  almond_yield_anomaly (ton/acre)
 #' @param  year (when was energy obtained, in the format YYYY)
 #' @param  price almond price ($/ton)
-#' @param discount rate (a value from 0 - 1; defaunt = 0.12)
+#' @param  discount rate (a value from 0 - 1; defaunt = 0.12)
 #' @author Elmera Azadpour, Mia Forsline, Alex Vand
 #' @examples compute_profit_from_almonds(almond_yield_anomaly = ? , year = ? , price = ? , discount = 0.12)
 #' @return data frame with estimate of profit ?

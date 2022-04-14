@@ -46,9 +46,39 @@ source(here("functions", "compute_npv.R"))
 # 2. Do a simple informal sensitivity analysis of almond yield profit using at least 2 parameters 
 
 - Similar to the in-class example, we plan to conduct a sensitivity analysis assuming +/- 15% uncertainty in the current price of almonds (`price`) and discount rate (`discount`) 
+- We assume a default almond price of $X/ton 
+- We assume a default discount rate of 0.12 
+- We begin by sampling X times from a uniform distribution 
 
 ```{r}
+#parameter defaults 
+almond_price_default <- 3000 #$1.47/lb * 2000lb = approximately $3000/ton 
+discount_rate_default <- 0.12 
 
+#deviation %
+deviation = 0.15 
+
+#number of samples
+nsamples = 300
+
+#sample a uniform distribution from the price default
+price <- runif(min = almond_price_default - (deviation * almond_price_default), 
+                      max = almond_price_default + (deviation * almond_price_default),
+                      n=nsamples)
+
+discount = rnorm(mean=0.6, sd = 0.1, n=nsamples)
+
+#bind price_thresh and discount_rate into a dataframe 
+parameters <- cbind.data.frame(discount, price)
+```
+
+
+```{r}
+#note that paramters column names must match the input parameter names in the compute_profit_from_almonds function
+results <- parameters %>% 
+  pmap(compute_profit_from_almonds,
+       almond_yield_anomoly = ,
+       year = )
 ```
 
 

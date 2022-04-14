@@ -61,7 +61,7 @@ Note that all parameter values are based on the original paper.
 
 ```{r}
 # read in the data from .txt file
-clim_raw <- read.csv(file = "clim.txt", 
+clim_raw <- read.csv(file = here("data", "clim.txt"), 
                      header = T, 
                      sep = "")
 
@@ -89,6 +89,9 @@ annual_almond_yield <- cbind(unique(clim_data$wy), almond_yield_anomaly_annual(c
   as.data.frame() %>% #transform into a data frame 
   rename(year = V1,
          yield = V2)
+
+#save output as a CSV in the data folder 
+write_csv(x = annual_almond_yield, path = here("data", "annual_almond_yield.csv"))
 ```
 
 # Check the model outputs

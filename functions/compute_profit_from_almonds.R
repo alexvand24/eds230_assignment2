@@ -5,12 +5,12 @@
 #' @param  almond_yield_anomaly (ton/acre)
 #' @param  year (when was energy obtained, in the format YYYY)
 #' @param  price almond price ($/ton)
-#' @param discount rate (a value from 0 - 1)
+#' @param discount rate (a value from 0 - 1; defaunt = 0.12)
 #' @author Elmera Azadpour, Mia Forsline, Alex Vand
-#' @examples compute
-#' @return data frame with estimate of profit
+#' @examples compute_profit_from_almonds(almond_yield_anomaly = ? , year = ? , price = ? , discount = 0.12)
+#' @return data frame with estimate of profit ?
 
-compute_profit_from_almonds = function(almond_yield_anomaly, year, price, discount=0.12) {
+compute_profit_from_almonds <- function(almond_yield_anomaly, year, price, discount=0.12) {
   
   # make sure values are reasonable
   if (length(almond_yield_anomaly) < 1)

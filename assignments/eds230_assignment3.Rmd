@@ -74,11 +74,27 @@ parameters <- cbind.data.frame(discount, price)
 
 
 ```{r}
-#note that paramters column names must match the input parameter names in the compute_profit_from_almonds function
+#read in CSV of output from annual almond yield anomaly function 
+annual_almond_yield <- read_csv(here("data", "annual_almond_yield.csv"))
+
+#note that parameters column names must match the input parameter names in the compute_profit_from_almonds function
+## testing creation of results by using static values for almond_yield_anomaly and year 
 results <- parameters %>% 
   pmap(compute_profit_from_almonds,
-       almond_yield_anomoly = ,
-       year = )
+       almond_yield_anomaly = 10,
+       year = 1980)
+
+#check the results 
+results[[1]]
+length(results)
+```
+Can't get this code chunk to run - Mia 
+```{r}
+# # now we can extract results from the list as above
+# mean = map_df(results,`[`, c("mean")) 
+# 
+# # and we can add the parameter values for each run so we know what parameters gave us which mean value 
+# mean_elect = cbind.data.frame(mean_elect, parms)
 ```
 
 

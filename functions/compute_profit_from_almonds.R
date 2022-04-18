@@ -10,7 +10,7 @@
 #' @examples compute_profit_from_almonds(almond_yield_anomaly = ? , year = ? , price = ? , discount = 0.12)
 #' @return data frame with estimate of profit ?
 
-compute_profit_from_almonds <- function(almond_yield_anomaly, year, price, discount=0.12) {
+compute_profit_from_almonds <- function(almond_yield_anomaly, year, price, discount = 0.12) {
   
   # make sure values are reasonable
   if (length(almond_yield_anomaly) < 1)

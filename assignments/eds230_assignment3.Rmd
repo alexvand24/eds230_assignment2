@@ -43,6 +43,14 @@ source(here("functions", "almond_yield_anomaly_annual.R"))
 source(here("functions", "compute_npv.R"))
 ```
 
+Test the `compute_npv()` function 
+
+```{r}
+npv_test <- round(compute_npv(value = 10, time = 2, discount = 0.12), digits = 2)
+```
+
+With a discount rate of 12% over 2 years, a current value of $10 will have a net present value (NPV) of approximately `r npv_test`. 
+
 # 2. Do a simple informal sensitivity analysis of almond yield profit using at least 2 parameters 
 
 - Similar to the in-class example, we plan to conduct a sensitivity analysis assuming +/- 15% uncertainty in the current price of almonds (`price`) and discount rate (`discount`) 

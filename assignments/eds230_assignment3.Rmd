@@ -129,16 +129,36 @@ results <- parameters %>%
 results[[1]]
 #length(results) - should be a length of 300 
 ```
-Can't get this code chunk to run - Mia 
+
+
 ```{r}
-# now we can extract results from the list as above
-mean = map_df(results,`[`, c("mean"))
+# now we can extract data from the results list created above 
+mean <- map_df(results, #list we want to extract data from 
+               `[`, # `[` is a function that means extract 
+               c("year", 
+                 "net", 
+                 "netpre")) #select the columns from results we want to extract 
 
 # and we can add the parameter values for each run so we know what parameters gave us which mean value
-mean_elect = cbind.data.frame(mean_elect, parms)
+mean <- cbind.data.frame(mean, parameters)
 ```
 
-
 # 3. Create a single graph of the results 
+
+```{r}
+# plot - pick on of the 2 parameter as a color
+
+p1 <- ggplot(data = mean, aes(x = year, y = net, color = discount)) + 
+  geom_point(cex=2) +
+  labs(y="Y", 
+       x="X  \n X")
+
+p2 <- ggplot(data = mean, aes(x = year, y = net, color = price)) + 
+  geom_point(cex=2) +
+  labs(y = "Y", 
+       x = "X")
+
+ggarrange(p1,p2)
+```
 
 # 4. Output the graph as a stand along image 

@@ -145,18 +145,22 @@ mean <- cbind.data.frame(mean, parameters)
 
 # 3. Create a single graph of the results 
 
+- remember, for our sensitivity analysis, we chose to vary the price and discount rate to determine how almond yield changed over time 
+
 ```{r}
-# plot - pick on of the 2 parameter as a color
+# plot - pick one of the 2 parameter as a color
 
 p1 <- ggplot(data = mean, aes(x = year, y = net, color = discount)) + 
   geom_point(cex=2) +
-  labs(y="Y", 
-       x="X  \n X")
+  labs(y="Net", 
+       x="Year") + 
+  theme_classic()
 
 p2 <- ggplot(data = mean, aes(x = year, y = net, color = price)) + 
   geom_point(cex=2) +
-  labs(y = "Y", 
-       x = "X")
+  labs(y = "Net", 
+       x = "Year") + 
+  theme_classic()
 
 ggarrange(p1,p2)
 ```

@@ -150,16 +150,18 @@ mean <- cbind.data.frame(mean, parameters)
 ```{r}
 # plot - pick one of the 2 parameter as a color
 
-p1 <- ggplot(data = mean, aes(x = year, y = net, color = discount)) + 
+p1 <- ggplot(data = mean, aes(x = netpre, y = price, color = discount)) + 
   geom_point(cex=2) +
-  labs(y="Net", 
-       x="Year") + 
+  labs(y = "Price", 
+       x = "NPV",
+       color = "Discount Rate") + 
   theme_classic()
 
-p2 <- ggplot(data = mean, aes(x = year, y = net, color = price)) + 
+p2 <- ggplot(data = mean, aes(x = discount, y = price, color = netpre)) + 
   geom_point(cex=2) +
-  labs(y = "Net", 
-       x = "Year") + 
+  labs(y = "Price", 
+       x = "Discount Rate",
+       color = "NPV") + 
   theme_classic()
 
 ggarrange(p1,p2)

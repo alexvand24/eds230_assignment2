@@ -104,8 +104,8 @@ nsamples = 300
 
 #sample a uniform distribution from the price default
 price <- runif(min = almond_price_default - (deviation * almond_price_default), 
-                      max = almond_price_default + (deviation * almond_price_default),
-                      n=nsamples)
+               max = almond_price_default + (deviation * almond_price_default),
+               n=nsamples)
 
 discount = rnorm(mean=0.6, sd = 0.1, n=nsamples)
 
@@ -147,18 +147,18 @@ mean <- cbind.data.frame(mean, parameters)
 
 - remember, for our sensitivity analysis, we chose to vary the price and discount rate to determine how almond yield changed over time 
 
-```{r}
+```{r, results = FALSE}
 # plot - pick one of the 2 parameter as a color
 
 p1 <- ggplot(data = mean, aes(x = netpre, y = price, color = discount)) + 
-  geom_point(cex=2) +
+  geom_point(cex=2, alpha = 0.2) + # alpha = opacity
   labs(y = "Price", 
        x = "NPV",
-       color = "Discount Rate") + 
+       color = "Discount Rate")
   theme_classic()
 
 p2 <- ggplot(data = mean, aes(x = discount, y = price, color = netpre)) + 
-  geom_point(cex=2) +
+  geom_point(cex=2, alpha = 0.1) + # alpha = opacity
   labs(y = "Price", 
        x = "Discount Rate",
        color = "NPV") + 
@@ -167,4 +167,43 @@ p2 <- ggplot(data = mean, aes(x = discount, y = price, color = netpre)) +
 ggarrange(p1,p2)
 ```
 
-# 4. Output the graph as a stand along image 
+
+
+
+
+```{r, results = FALSE}
+# plot - the 2 parameters as independent variables on x-axis
+# NOTE THAT THESE PLOTS LOOK THE SAME AS THE ONES ABOVE - does this make sense?
+
+p3 <- ggplot(data = mean, aes(x = netpre, y = price, color = discount)) + 
+  geom_point(cex=2, alpha = 0.2) + # alpha = opacity
+  labs(y = "Price", 
+       x = "Discount Rate", # parameter 1
+       color = "NPV")
+  theme_classic()
+
+p4 <- ggplot(data = mean, aes(x = discount, y = price, color = netpre)) + 
+  geom_point(cex=2, alpha = 0.1) + # alpha = opacity
+  labs(y = "Price", 
+       x = "NPV", # parameter 2
+       color = "Discount Rate") + 
+  theme_classic()
+
+ggarrange(p3,p4)
+
+ggarrange(p1,p2,p3,p4) #to compare all 4 graphs
+```
+
+
+
+# 4. Output the graph as a stand alone image
+
+- save as .png
+
+```{r}
+#save image in assignments directory
+ggsave("assignment3_graph.png",
+       plot = ggarrange(p1,p2))
+```
+
+

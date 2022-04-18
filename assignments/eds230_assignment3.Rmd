@@ -43,20 +43,53 @@ source(here("functions", "almond_yield_anomaly_annual.R"))
 source(here("functions", "compute_npv.R"))
 ```
 
+Test the `almond_yield_anomaly_annual()` function
+- save the output as a CSV 
+
+```{r}
+# read in the data from .txt file
+clim_raw <- read.csv(file = here("data", "clim.txt"), 
+                     header = T, 
+                     sep = "")
+
+# clean data 
+clim_data <- clim_raw %>% 
+             janitor::clean_names() %>% 
+             mutate(d = lubridate::as_date(d), #convert d column to Date format rather than a character 
+                    year = lubridate::year(d))
+
+# set coefficient parameter values 
+temp_coeff1 <- -0.015
+temp_coeff2 <- -0.0046
+precip_coeff1 <- -0.07
+precip_coeff2 <- 0.0043
+constant <- 0.28
+
+# calculate annual almond yield for each water year (wy)
+annual_almond_yield <- cbind(unique(clim_data$wy), almond_yield_anomaly_annual(clim_data)) %>%  #create a matrix/array of dates and annual almond yields
+  as.data.frame() %>% #transform into a data frame 
+  rename(year = V1,
+         yield = V2)
+
+#save output as a CSV in the data folder 
+write_csv(x = annual_almond_yield, path = here("data", "annual_almond_yield.csv"))
+```
+
+
 Test the `compute_npv()` function 
 
 ```{r}
 npv_test <- round(compute_npv(value = 10, time = 2, discount = 0.12), digits = 2)
 ```
 
-With a discount rate of 12% over 2 years, a current value of $10 will have a net present value (NPV) of approximately `r npv_test`. 
+With a discount rate of 12% over 2 years, a current value of $10 will have a net present value (NPV) of approximately $`r npv_test`. 
 
 # 2. Do a simple informal sensitivity analysis of almond yield profit using at least 2 parameters 
 
 - Similar to the in-class example, we plan to conduct a sensitivity analysis assuming +/- 15% uncertainty in the current price of almonds (`price`) and discount rate (`discount`) 
-- We assume a default almond price of $X/ton 
+- We assume a default almond price of $3,000/ton 
 - We assume a default discount rate of 0.12 
-- We begin by sampling X times from a uniform distribution 
+- We begin by sampling 300 times from a uniform distribution 
 
 ```{r}
 #parameter defaults 
@@ -89,20 +122,20 @@ annual_almond_yield <- read_csv(here("data", "annual_almond_yield.csv"))
 ## testing creation of results by using static values for almond_yield_anomaly and year 
 results <- parameters %>% 
   pmap(compute_profit_from_almonds,
-       almond_yield_anomaly = 10,
-       year = 1980)
+       almond_yield_anomaly = annual_almond_yield$yield,
+       year = annual_almond_yield$year)
 
 #check the results 
 results[[1]]
-length(results)
+#length(results) - should be a length of 300 
 ```
 Can't get this code chunk to run - Mia 
 ```{r}
-# # now we can extract results from the list as above
-# mean = map_df(results,`[`, c("mean")) 
-# 
-# # and we can add the parameter values for each run so we know what parameters gave us which mean value 
-# mean_elect = cbind.data.frame(mean_elect, parms)
+# now we can extract results from the list as above
+mean = map_df(results,`[`, c("mean"))
+
+# and we can add the parameter values for each run so we know what parameters gave us which mean value
+mean_elect = cbind.data.frame(mean_elect, parms)
 ```
 
 

@@ -23,6 +23,17 @@ almond_yield_anomaly_annual = function(feb_temp_min,
                                 precip_coeff2 = 0.0043,
                                 constant = 0.28) {
   
+  # read in the data from .txt file
+  clim_raw <- read.csv(file = here("data", "clim.txt"), 
+                       header = T, 
+                       sep = "")
+  
+  # clean data 
+  clim_data <- clim_raw %>% 
+    janitor::clean_names() %>% 
+    mutate(d = lubridate::as_date(d), #convert d column to Date format rather than a character 
+           year = lubridate::year(d))
+  
   #create a temperature data frame to summarize monthly temperature minimums by year
   temp <- clim_data %>% 
     group_by(month, year) %>% 

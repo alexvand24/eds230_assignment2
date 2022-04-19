@@ -107,6 +107,7 @@ price <- runif(min = almond_price_default - (deviation * almond_price_default),
                max = almond_price_default + (deviation * almond_price_default),
                n=nsamples)
 
+#sample from a normal distribution 
 discount = rnorm(mean=0.6, sd = 0.1, n=nsamples)
 
 #bind price_thresh and discount_rate into a dataframe 

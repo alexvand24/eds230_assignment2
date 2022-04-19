@@ -1,6 +1,6 @@
 #' compute_profit_from_almonds
 #' 
-#' This function estimates almond yield profit based on almond yield anomoly, year, price, and discount rate. 
+#' This function estimates almond yield profit based on almond yield anomaly, year, price, and discount rate. 
 #' 
 #' @param  almond_yield_anomaly (ton/acre)
 #' @param  year (when almonds were grown, in the format YYYY)
@@ -10,26 +10,25 @@
 #' @examples compute_profit_from_almonds(almond_yield_anomaly = ? , year = ? , price = ? , discount = 0.12)
 #' @return data frame with estimate of profit ?
 
-compute_profit_from_almonds <- function(almond_yield_anomaly, year, price, discount = 0.12) {
+compute_profit_from_almonds <- function(almond_yield_anomaly,
+                                        year,
+                                        price,
+                                        discount = 0.12) {
   
   # make sure values are reasonable
   if (length(almond_yield_anomaly) < 1)
     return(NA)
   
-  # # energy cannot be negative
-  # if (min(almond_yield_anomaly) < 0)
-  #   return(NA)
-  
   # generate a unique identifier or scenario number
   scen = seq(from = 1, to = length(almond_yield_anomaly))
   yearprofit = data.frame(scen = scen, 
                           almond_yield_anomaly = almond_yield_anomaly, 
-                          year=year)
-  yearprofit$net =  yearprofit$almond_yield_anomaly * price
+                          year = year)
+  yearprofit$net = yearprofit$almond_yield_anomaly * price
   
   # note how discount is passed through to this function
   # remember to normalize the year to start year e.g the first year
-  yearprofit= yearprofit %>% 
+  yearprofit = yearprofit %>% 
     mutate(netpre = compute_npv(value = net, 
                                 time = year - year[1], 
                                 discount = discount ))

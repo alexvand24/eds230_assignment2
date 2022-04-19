@@ -152,14 +152,14 @@ mean <- cbind.data.frame(mean, parameters)
 
 p1 <- ggplot(data = mean, aes(x = netpre, y = price, color = discount)) + 
   geom_point(cex=2, alpha = 0.2) + # alpha = opacity
-  labs(y = "Almond Price", 
+  labs(y = "Almond Price ($)", 
        x = "Net Present Value",
        color = "Discount Rate")
   theme_classic()
 
 p2 <- ggplot(data = mean, aes(x = discount, y = price, color = netpre)) + 
   geom_point(cex=2, alpha = 0.1) + # alpha = opacity
-  labs(y = "Almond Price", 
+  labs(y = "Almond Price ($)", 
        x = "Discount Rate",
        color = "Net Present Value") + 
   theme_classic()
@@ -177,16 +177,16 @@ ggarrange(p1,p2)
 
 p3 <- ggplot(data = mean, aes(x = netpre, y = price, color = discount)) + 
   geom_point(cex=2, alpha = 0.2) + # alpha = opacity
-  labs(y = "Price", 
-       x = "NPV", # parameter 1
-       color = "Discount")
+  labs(y = "Almond Price ($)", 
+       x = "Net Present Value", # parameter 1
+       color = "Discount Rate")
   theme_classic()
 
 p4 <- ggplot(data = mean, aes(x = discount, y = price, color = netpre)) + 
   geom_point(cex=2, alpha = 0.2) + # alpha = opacity
-  labs(y = "Price", 
-       x = "Discount", # parameter 2
-       color = "NPV") + 
+  labs(y = "Almond Price ($)", 
+       x = "Discount Rate", # parameter 2
+       color = "Net Present Value") + 
   theme_classic()
 
 ggarrange(p3,p4)

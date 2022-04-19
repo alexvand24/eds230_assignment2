@@ -196,6 +196,26 @@ ggarrange(p1,p2,p3,p4) #to compare all 4 graphs
 
 
 
+```{r}
+boxplot1 <- ggplot(data = mean,
+                   aes(as.factor(year), discount, group = year)) +
+              geom_boxplot() +
+              labs(x="Year", y="Discount rate")
+  
+
+boxplot2 <- ggplot(data = mean,
+                   aes(as.factor(year), netpre, group = year)) +
+              geom_boxplot() +
+              labs(x="Year", y="NPV")
+
+ggarrange(boxplot1, boxplot2)
+```
+
+```{r}
+
+```
+
+
 
 # 4. Output the graph as a stand alone image
 

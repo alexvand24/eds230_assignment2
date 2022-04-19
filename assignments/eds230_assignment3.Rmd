@@ -178,21 +178,22 @@ ggarrange(p1,p2)
 p3 <- ggplot(data = mean, aes(x = netpre, y = price, color = discount)) + 
   geom_point(cex=2, alpha = 0.2) + # alpha = opacity
   labs(y = "Price", 
-       x = "Discount Rate", # parameter 1
-       color = "NPV")
+       x = "NPV", # parameter 1
+       color = "Discount")
   theme_classic()
 
 p4 <- ggplot(data = mean, aes(x = discount, y = price, color = netpre)) + 
-  geom_point(cex=2, alpha = 0.1) + # alpha = opacity
+  geom_point(cex=2, alpha = 0.2) + # alpha = opacity
   labs(y = "Price", 
-       x = "NPV", # parameter 2
-       color = "Discount Rate") + 
+       x = "Discount", # parameter 2
+       color = "NPV") + 
   theme_classic()
 
 ggarrange(p3,p4)
 
 ggarrange(p1,p2,p3,p4) #to compare all 4 graphs
 ```
+
 
 
 

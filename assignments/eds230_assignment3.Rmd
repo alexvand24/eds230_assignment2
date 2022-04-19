@@ -110,7 +110,7 @@ price <- runif(min = almond_price_default - (deviation * almond_price_default),
 #sample from a normal distribution 
 discount = rnorm(mean=0.6, sd = 0.1, n=nsamples)
 
-#bind price_thresh and discount_rate into a dataframe 
+#bind price and discount rate into a dataframe 
 parameters <- cbind.data.frame(discount, price)
 ```
 
@@ -120,7 +120,6 @@ parameters <- cbind.data.frame(discount, price)
 annual_almond_yield <- read_csv(here("data", "annual_almond_yield.csv"))
 
 #note that parameters column names must match the input parameter names in the compute_profit_from_almonds function
-## testing creation of results by using static values for almond_yield_anomaly and year 
 results <- parameters %>% 
   pmap(compute_profit_from_almonds,
        almond_yield_anomaly = annual_almond_yield$yield,
@@ -153,16 +152,16 @@ mean <- cbind.data.frame(mean, parameters)
 
 p1 <- ggplot(data = mean, aes(x = netpre, y = price, color = discount)) + 
   geom_point(cex=2, alpha = 0.2) + # alpha = opacity
-  labs(y = "Price", 
-       x = "NPV",
+  labs(y = "Almond Price", 
+       x = "Net Present Value",
        color = "Discount Rate")
   theme_classic()
 
 p2 <- ggplot(data = mean, aes(x = discount, y = price, color = netpre)) + 
   geom_point(cex=2, alpha = 0.1) + # alpha = opacity
-  labs(y = "Price", 
+  labs(y = "Almond Price", 
        x = "Discount Rate",
-       color = "NPV") + 
+       color = "Net Present Value") + 
   theme_classic()
 
 ggarrange(p1,p2)
